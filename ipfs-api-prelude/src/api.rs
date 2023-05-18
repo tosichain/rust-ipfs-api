@@ -828,6 +828,12 @@ pub trait IpfsApi: Backend {
         }
     }
 
+    fn dag_export(&self, options: request::DagExport) -> BoxStream<Bytes, Self::Error> {
+        impl_stream_api_response! {
+            (self, options, None) => request_stream_bytes
+        }
+    }
+
     /// Add a DAG node to Ipfs.
     ///
     /// ```no_run

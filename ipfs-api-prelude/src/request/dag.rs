@@ -35,6 +35,20 @@ impl<'a> ApiRequest for DagGet<'a> {
 
 #[cfg_attr(feature = "with-builder", derive(TypedBuilder))]
 #[derive(Serialize, Default)]
+pub struct DagExport<'a> {
+    #[serde(rename = "arg")]
+    pub cid: &'a str,
+
+    #[serde(rename = "progress")]
+    pub progress: bool,
+}
+
+impl<'a> ApiRequest for DagExport<'a> {
+    const PATH: &'static str = "/dag/export";
+}
+
+#[cfg_attr(feature = "with-builder", derive(TypedBuilder))]
+#[derive(Serialize, Default)]
 #[serde(rename_all = "kebab-case")]
 pub struct DagPut<'a> {
     /// Codec that the stored object will be encoded with. Default: dag-cbor. Required: no.
@@ -66,6 +80,15 @@ mod tests {
             ..Default::default()
         },
         "arg=bafkreiglbo2l5lp25vteuexq3svg5hoad76mehz4tlrbwheslvluxcd63a"
+    );
+
+    serialize_url_test!(
+        test_serializes_dag_export,
+        DagExport {
+            cid: "Qmdmb1depRoQTLc1VqdtvThUirN1aL4omCqVE7bGFSW4kB",
+            progress: false,
+        },
+        "arg=Qmdmb1depRoQTLc1VqdtvThUirN1aL4omCqVE7bGFSW4kB&progress=false"
     );
 
     serialize_url_test!(
