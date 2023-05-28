@@ -2355,6 +2355,17 @@ pub trait IpfsApi: Backend {
         self.request(request::TarAdd, Some(form)).await
     }
 
+    async fn dag_import<R>(&self, data: R) -> Result<response::DagImportResponse, Self::Error>
+    where
+        R: 'static + Read + Send + Sync + Unpin,
+    {
+        let mut form = multipart::Form::default();
+
+        form.add_reader("path", data);
+
+        self.request(request::DagImport{pin_roots: true, silent: false, stats: false, allow_big_block: false}, Some(form)).await
+    }
+
     /// Export a tar file from Ipfs.
     ///
     /// ```no_run

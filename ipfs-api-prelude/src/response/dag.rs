@@ -35,9 +35,36 @@ pub struct DagPutResponse {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct DagImportResponse {
+    #[serde(rename = "Root")]
+    pub root: Root,
+
+    /*#[serde(rename = "Stats")]
+    pub stats: Stats,*/
+}
+
+#[derive(Debug, Deserialize)]
 pub struct Cid {
     #[serde(rename = "/")]
     pub cid_string: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Stats {
+    #[serde(rename = "BlockBytesCount")]
+    pub block_bytes_count: u64,
+
+    #[serde(rename = "BlockCount")]
+    pub block_count: u64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Root {
+    #[serde(rename = "Cid")]
+    pub cid: Cid,
+
+    #[serde(rename = "PinErrorMsg")]
+    pub pin_error_msg: String,
 }
 
 #[cfg(test)]

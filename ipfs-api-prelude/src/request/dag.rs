@@ -49,6 +49,27 @@ impl<'a> ApiRequest for DagExport<'a> {
 
 #[cfg_attr(feature = "with-builder", derive(TypedBuilder))]
 #[derive(Serialize, Default)]
+pub struct DagImport{
+
+    #[serde(rename = "pin-roots")]
+    pub pin_roots: bool,
+
+    #[serde(rename = "silent")]
+    pub silent: bool,
+
+    #[serde(rename = "stats")]
+    pub stats: bool,
+
+    #[serde(rename = "allow-big-block")]
+    pub allow_big_block: bool,
+}
+
+impl ApiRequest for DagImport{
+    const PATH: &'static str = "/dag/import";
+}
+
+#[cfg_attr(feature = "with-builder", derive(TypedBuilder))]
+#[derive(Serialize, Default)]
 #[serde(rename_all = "kebab-case")]
 pub struct DagPut<'a> {
     /// Codec that the stored object will be encoded with. Default: dag-cbor. Required: no.
